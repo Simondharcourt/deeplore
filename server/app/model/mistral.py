@@ -57,7 +57,7 @@ def chat_mistral(speech: Speech):
     chat_response = client.chat(
         model=MODEL_NAME,
         messages=[ChatMessage(role="user", content=f"""
-                           {getPrompt(speech)} 
+                           {await getPrompt(speech)} 
                             """)]
         )
     if DEBUG :

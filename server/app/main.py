@@ -22,9 +22,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-##### Nombre de workers ###################
-executor = ThreadPoolExecutor(max_workers=8)
-loop = asyncio.get_event_loop()
 
 
 @app.get("/", tags=["root"])
@@ -44,29 +41,9 @@ async def root():
     return {"Status": "Alive"}
 
 @app.post("/initialize")
-async def initialize(personList: PeopleList, id: str):
-    """
-    Initialize a conversation file for a specific user.
-
-    This function creates a new file in the 'data/provisoire/' directory to store the conversation
-    history for a specific user identified by their unique 'id'. If the file already exists, no action
-    is taken.
-
-    Parameters:
-    id (str): The unique identifier of the user for whom the conversation file is being initialized.
-
-    Returns:
-    dict: A dictionary containing a no response.
-
-    Raises:
-    None
-    """
-    Path("data/provisoire").mkdir(parents=True, exist_ok=True)
-    # create the conversations file for each person
-    for person in personList.people:
-        open("data/provisoire/conversations_"+person.firstname+'_'+person.lastname + '_' + id + '.txt', 'a', encoding='utf-8').close()
-    return {"send": ""}
-
+async def initialize(personList: PeopleList):
+    await datastore.start_session(personList)
+    return
 
 
 @app.post("/hear/{model}")
@@ -116,7 +93,19 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
     # Return the NPC's name, the speaker's name, and the NPC's response
         return {"NPC": speech.speaker, "Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
     else:
-        return {"NPC": speech.speaker, "Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
+        result = await loop.run_in_executor(executor, chat, speech)
+
+    answer_speech = speech.answer_speech(result)
+
+    await datastore.converse(speech, answer_speech)
+
+# Return the NPC's name, the speaker's name, and the NPC's response
+    return {
+        "NPC": answer_speech.target.fullname(), 
+        "Speaker": answer_speech.speaker.fullname(), 
+        "Speech": f"{answer_speech.content}"
+    }
+        
 
 
 @app.get("/files/{file}")
