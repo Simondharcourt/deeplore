@@ -1,7 +1,7 @@
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
 from ..config import MISTRAL_API_KEY, DEBUG, LOCAL, MODEL_NAME, USE_MISTRAL
-from ..classes import Speech
+from ..domain import Speech
 from ..utils import getPrompt
 
 if USE_MISTRAL:
@@ -57,7 +57,7 @@ def chat_mistral(speech: Speech):
     chat_response = client.chat(
         model=MODEL_NAME,
         messages=[ChatMessage(role="user", content=f"""
-                           {await getPrompt(speech)} 
+                           {getPrompt(speech)} 
                             """)]
         )
     if DEBUG :

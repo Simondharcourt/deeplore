@@ -42,7 +42,7 @@ async def root():
 
 @app.post("/initialize")
 async def initialize(personList: PeopleList):
-    await datastore.start_session(personList)
+    datastore.start_session(personList)
     return
 
 
@@ -97,7 +97,7 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
 
     answer_speech = speech.answer_speech(result)
 
-    await datastore.converse(speech, answer_speech)
+    datastore.converse(speech, answer_speech)
 
 # Return the NPC's name, the speaker's name, and the NPC's response
     return {
