@@ -23,4 +23,4 @@ USE_MISTRAL = eval(os.environ.get("USE_MISTRAL", "False"))
 USE_OPENAI = eval(os.environ.get("USE_OPENAI", "False"))
 USE_GROQ = eval(os.environ.get("USE_GROQ", "False"))
 GOOGLE_APPLICATION_CREDENTIALS = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
-
+USE_FIRESTORE = eval(os.environ.get("USE_FIRESTORE", "False"))
