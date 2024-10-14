@@ -1,6 +1,6 @@
 from ..utils import getPrompt
 from ..config import OPENAI_API_KEY, DEBUG, MODEL_NAME, OPENAI_API_KEY, USE_OPENAI
-from ..classes import Speech
+from ..domain import Speech
 
 import openai
 

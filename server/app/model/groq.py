@@ -1,6 +1,6 @@
 from ..utils import getPrompt
 from ..config import GROQ_API_KEY, DEBUG, MODEL_NAME, USE_GEMINI, USE_GROQ
-from ..classes import Speech
+from ..domain import Speech
 from groq import Groq
 
 

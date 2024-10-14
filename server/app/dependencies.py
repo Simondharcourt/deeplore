@@ -12,7 +12,7 @@ from .infrastructure.chat.Mistral import Mistral
 from .infrastructure.chat.LangChain import LangChain
 
 
-nest_asyncio.apply()
+# nest_asyncio.apply()
 
 ##### Nombre de workers ###################
 executor = ThreadPoolExecutor(max_workers=8)

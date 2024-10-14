@@ -5,9 +5,8 @@ from concurrent.futures import ThreadPoolExecutor
 import asyncio
 from .model.mistral import chat_mistral
 from .config import DEBUG, USE_GEMINI, USE_LANGCHAIN, USE_MISTRAL, USE_OPENAI, USE_GROQ
-from .classes import PeopleList, Speech, People
-from .model.gemini import chat_gemini
-from .model.langchain import chat_langchain
+# from .model.gemini import chat_gemini
+# from .model.langchain import chat_langchain
 from .model.openai import chat_gpt
 from .model.groq import chat_groq
 

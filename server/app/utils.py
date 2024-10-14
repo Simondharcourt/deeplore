@@ -10,17 +10,21 @@ def getPrompt(speech: Speech):
     npc = datastore.get_behavior(speech.target)
     relation = datastore.get_knowledge(speech.target)
 
-    return f"""{context} \n\n
-        {npc} \n\n
-        *CONVERSATION ENTENDUE
-        {'\n'.join([heard_conversation.to_prompt() for heard_conversation in heard_conversations])}  \n\n
-        {relation}  \n\n
-        *CONVERSATION
-        {'\n'.join([conversation.to_prompt() for conversation in conversations])} \n\n
-        
-        {speech.speaker} is speaking and says : "{speech.content}"\n\n
+    return f"""{context}
 
-        {instructions}
-        
-        Question : {speech.content}
-        """
+{npc}
+
+*CONVERSATION ENTENDUE
+{chr(10).join([heard_conversation.to_prompt() for heard_conversation in heard_conversations])}
+
+{relation}
+
+*CONVERSATION
+{chr(10).join([conversation.to_prompt() for conversation in conversations])}
+
+{speech.speaker} is speaking and says : "{speech.content}"
+
+{instructions}
+
+Question : {speech.content}
+"""
